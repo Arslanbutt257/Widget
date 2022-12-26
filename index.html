@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/chat.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Chatbox</title>
+</head>
+<body>
+    <div class="container">
+        <div class="chatbox">
+            <div class="chatbox__support">
+                <div class="chatbox__header">
+                    <div class="chatbox__content--header">
+                        <h4 class="chatbox__heading--header">Chat support</h4>
+                    </div>
+                </div>
+                <div class="chatbox__messages">
+                    <div>
+                        <div id="Query" class="messages__item messages__item--visitor">
+                            How can I help you?
+                        </div>
+                        <div id="Reply" class="messages__item messages__item--operator">
+                        </div>
+                    </div>
+                </div>
+                <div class="chatbox__footer">
+                    <input type="text" id="msg" placeholder="Write a message..." size="35">
+                    <button id="send" class="chatbox__send--footer">Send</button>
+                </div>
+            </div>
+            <div class="chatbox__button">
+                <button>button</button>
+            </div>
+        </div>
+    </div>
+    <script src="./assets/js/Chat.js"></script>
+    <script src="./app.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+          $('#send').click(function () {
+      
+            var Query = $('#msg').val();
+            var API_Key = "c74ba2fdcf7242db800686148fa6980d";
+            var userId = "4646g2136fgqw";
+      
+            $.ajax({
+              type: "POST",
+              cache: false,
+              url: "http://127.0.0.1:5001/user/query",
+              data: JSON.stringify({"userId":userId, "API_Key":API_Key, "Query": Query}),    // multiple data sent using ajax
+              contentType: "application/json",
+              success: function (result){
+                alert(result["message"])
+                $('#Query').html(Query);
+                $('#Reply').html(result["message"]);
+              }
+            });
+            return false;
+          });
+        });
+    </script>
+
+</body>
+</html>
